@@ -3,3 +3,11 @@
 /**
  * Install tasks for webform_sidkey
  */
+
+/**
+ * Implements hook_uninstall().
+ */
+function webform_sidkey_uninstall() {
+  variable_del('webform_sidkey_default_base');
+}
+
