@@ -45,7 +45,7 @@ function webform_sidkey_webform_submission_load(&$submissions) {
   $tobase = variable_get('webform_sidkey_default_base', WEBFORM_SIDKEY_DEFAULT_BASE);
 
   foreach($submissions as $sid => $submission) {
-    $submissions[$sid]['sidkey'] = base_convert($sid, 10, $tobase);
+    $submissions[$sid]->sidkey = base_convert($sid, 10, $tobase);
   }
 }
 
