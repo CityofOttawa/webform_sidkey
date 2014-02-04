@@ -37,7 +37,12 @@ function webform_sidkey_menu() {
   return $items;
 }
 
-
+/**
+ * Implements hook_menu_alter().
+ */
+function webform_sidkey_menu_alter(&$items) {
+  $items['admin/config/content/webform']['type'] = MENU_NORMAL_ITEM | MENU_DEFAULT_LOCAL_TASK;
+}
 
 /**
  * Implements hook_webform_submission_load().
