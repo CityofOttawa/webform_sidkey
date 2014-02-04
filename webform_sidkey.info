@@ -1,4 +1,5 @@
 name = Webform Submission Key
 description = Generate a submission key based on the submission ID
 core = 7.x
+configure = admin/config/content/webform/sidkey
 dependencies[] = webform
