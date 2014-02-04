@@ -58,8 +58,7 @@ function webform_sidkey_get_submissions($filters = array(), $headers = NULL, $pa
   module_load_include('inc', 'webform', 'includes/webform.submissions');
 
   if (array_key_exists('sidkey', $filters)) {
-    $frombase = variable_get('webform_sidkey_default_base', WEBFORM_SIDKEY_DEFAULT_BASE);
-    $filters['sid'] = base_convert($filters['sidkey'], $frombase, 10);
+    $filters['sid'] = webform_sidkey_extract_sid($filters['sidkey']);
   }
 
   return webform_get_submissions($filters, $headers, $pager_count);
@@ -78,4 +77,19 @@ function webform_sidkey_generate_sidkey($sid) {
   $tobase = variable_get('webform_sidkey_default_base', WEBFORM_SIDKEY_DEFAULT_BASE);
 
   return base_convert($sid, 10, $tobase);
+}
+
+/**
+ * Retrieve the sid value given a sidkey
+ *
+ * @param string $sidkey
+ *  Sidkey value
+ * @param int $frombase [optional]
+ *  Base value for sidkey
+ */
+function webform_sidkey_extract_sid($sidkey, $frombase = NULL) {
+  if (!is_int($frombase)) {
+    $frombase = variable_get('webform_sidkey_default_base', WEBFORM_SIDKEY_DEFAULT_BASE);
+  }
+  return base_convert($sidkey, $frombase, 10);
 }
