@@ -1,0 +1,4 @@
+name = Webform Submission Key
+description = Generate a submission key based on the submission ID
+core = 7.x
+dependencies[] = webform

@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Generate a submission key based on a webform submission ID
+ */
+
+// @todo
