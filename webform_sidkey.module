@@ -41,11 +41,8 @@ function webform_sidkey_menu() {
  * Implements hook_webform_submission_load().
  */
 function webform_sidkey_webform_submission_load(&$submissions) {
-  // @todo add the generated sid value to the loaded object
-  $tobase = variable_get('webform_sidkey_default_base', WEBFORM_SIDKEY_DEFAULT_BASE);
-
   foreach($submissions as $sid => $submission) {
-    $submissions[$sid]->sidkey = base_convert($sid, 10, $tobase);
+    $submissions[$sid]->sidkey = webform_sidkey_generate_sidkey($sid);
   }
 }
 
@@ -66,4 +63,19 @@ function webform_sidkey_get_submissions($filters = array(), $headers = NULL, $pa
   }
 
   return webform_get_submissions($filters, $headers, $pager_count);
+}
+
+/**
+ * Generate a sidkey value based on a submission id
+ *
+ * @param int $sid
+ *  Submission id
+ * @return string
+ *  Returns the generated key.
+ */
+function webform_sidkey_generate_sidkey($sid) {
+  // @todo add the generated sid value to the loaded object
+  $tobase = variable_get('webform_sidkey_default_base', WEBFORM_SIDKEY_DEFAULT_BASE);
+
+  return base_convert($sid, 10, $tobase);
 }
