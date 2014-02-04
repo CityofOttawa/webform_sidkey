@@ -73,7 +73,6 @@ function webform_sidkey_get_submissions($filters = array(), $headers = NULL, $pa
  *  Returns the generated key.
  */
 function webform_sidkey_generate_sidkey($sid) {
-  // @todo add the generated sid value to the loaded object
   $tobase = variable_get('webform_sidkey_default_base', WEBFORM_SIDKEY_DEFAULT_BASE);
 
   return base_convert($sid, 10, $tobase);
