@@ -58,7 +58,7 @@ function webform_sidkey_webform_submission_load(&$submissions) {
  * @see webform_get_submissions().
  */
 function webform_sidkey_get_submissions($filters = array(), $headers = NULL, $pager_count = 0) {
-  module_load_include('inc', 'webform', 'webform.submissions');
+  module_load_include('inc', 'webform', 'includes/webform.submissions');
 
   if (array_key_exists('sidkey', $filters)) {
     $frombase = variable_get('webform_sidkey_default_base', WEBFORM_SIDKEY_DEFAULT_BASE);
