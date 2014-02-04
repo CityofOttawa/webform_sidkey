@@ -20,6 +20,26 @@ function webform_sidkey_permission() {
 }
 
 /**
+ * Implements hook_menu().
+ */
+function webform_sidkey_menu() {
+  $items = array();
+
+  $items['admin/config/content/webform/sidkey'] = array(
+    'title' => 'Submission Key Settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('webform_sidkey_admin_form'),
+    'access arguments' => array('configure webform_sidkey'),
+    'file' => 'webform_sidkey.admin.inc',
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  return $items;
+}
+
+
+
+/**
  * Implements hook_webform_submission_load().
  */
 function webform_sidkey_webform_submission_load(&$submissions) {
