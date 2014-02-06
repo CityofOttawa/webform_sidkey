@@ -73,6 +73,7 @@ function webform_sidkey_get_submissions($filters = array(), $headers = NULL, $pa
  *  Returns the generated key.
  */
 function webform_sidkey_generate_sidkey($sid) {
+  // @todo add the generated sid value to the loaded object
   $tobase = variable_get('webform_sidkey_default_base', WEBFORM_SIDKEY_DEFAULT_BASE);
 
   return base_convert($sid, 10, $tobase);
@@ -91,4 +92,53 @@ function webform_sidkey_extract_sid($sidkey, $frombase = NULL) {
     $frombase = variable_get('webform_sidkey_default_base', WEBFORM_SIDKEY_DEFAULT_BASE);
   }
   return base_convert($sidkey, $frombase, 10);
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function webform_sidkey_views_api() {
+  return array(
+    'api' => 3,
+  );
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function webform_sidkey_views_data_alter(&$data) {
+  if (isset($data['webform_submissions'])) {
+    $data['webform_submissions']['sid']['field']['handler'] = 'webform_sidkey_views_hanlder_field_sidkey';
+  }
+}
+
+// @todo move this into it's own file under views/handlers
+class webform_sidkey_views_hanlder_field_sidkey extends views_handler_field_numeric {
+  function option_definition() {
+    $options = parent::option_definition();
+
+    $options['submission_key'] = array('default' => FALSE, 'bool' => TRUE);
+
+    return $options;
+  }
+
+  function options_form(&$form, &$form_state) {
+    $form['submission_key'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Submission Key'),
+      '#description' => t('Render the value as a submission key'),
+      '#default_value' => $this->options['submission_key'],
+    );
+
+    parent::options_form($form, $form_state);
+  }
+
+  function render($values) {
+    if (!empty($this->options['submission_key'])) {
+      return webform_sidkey_generate_sidkey(intval($this->get_value($values)));
+    }
+    else {
+      return parent::render($values);
+    }
+  }
 }
