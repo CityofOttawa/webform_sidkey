@@ -59,6 +59,8 @@ function webform_sidkey_get_submissions($filters = array(), $headers = NULL, $pa
 
   if (array_key_exists('sidkey', $filters)) {
     $filters['sid'] = webform_sidkey_extract_sid($filters['sidkey']);
+    // Remove the sidkey to avoid confusing the webform submission loading code
+    unset($filters['sidkey']);
   }
 
   return webform_get_submissions($filters, $headers, $pager_count);
