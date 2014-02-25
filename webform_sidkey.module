@@ -52,9 +52,20 @@ function webform_sidkey_token_info_alter(&$data) {
  */
 function webform_sidkey_tokens($type, $tokens, array $data = array(), array $options = array()) {
   $replacements = array();
-  
-  // @todo all this stuff
-  
+
+  if ($type == 'submission' && !empty($data['webform-submission'])) {
+    $submission = $data['webform-submission'];
+    if (isset($submission->sidkey)) {
+      foreach ($tokens as $name => $original) {
+        switch ($name) {
+          case 'sidkey':
+          $replacements[$original] = $submission->sidkey;
+          break;
+        }
+      }
+    }
+  }
+
   return $replacements;
 }
 
