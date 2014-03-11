@@ -38,6 +38,38 @@ function webform_sidkey_menu() {
 }
 
 /**
+ * Implements hook_token_info_alter().
+ */
+function webform_sidkey_token_info_alter(&$data) {
+  $data['tokens']['submission']['sidkey'] = array(
+    'name' => t('Submission Key'),
+    'description' => t('Unique, generated human readable key'),
+  );
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function webform_sidkey_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+
+  if ($type == 'submission' && !empty($data['webform-submission'])) {
+    $submission = $data['webform-submission'];
+    if (isset($submission->sidkey)) {
+      foreach ($tokens as $name => $original) {
+        switch ($name) {
+          case 'sidkey':
+          $replacements[$original] = $submission->sidkey;
+          break;
+        }
+      }
+    }
+  }
+
+  return $replacements;
+}
+
+/**
  * Implements hook_webform_submission_load().
  */
 function webform_sidkey_webform_submission_load(&$submissions) {
