@@ -33,6 +33,16 @@ function webform_sidkey_menu() {
     'file' => 'webform_sidkey.admin.inc',
     'type' => MENU_LOCAL_TASK,
   );
+  $items['node/%webform_menu/webform-results/sidkey'] = array(
+    'title' => 'Lookup Submission Key',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('webform_sidkey_lookup_page', 1),
+    'access callback' => 'webform_results_access',
+    'access arguments' => array(1),
+    'file' => 'webform_sidkey.pages.inc',
+    'weight' => 5,
+    'type' => MENU_LOCAL_TASK,
+  );
 
   return $items;
 }
