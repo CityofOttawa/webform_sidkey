@@ -33,6 +33,7 @@ function webform_sidkey_menu() {
     'file' => 'webform_sidkey.admin.inc',
     'type' => MENU_LOCAL_TASK,
   );
+
   $items['node/%webform_menu/webform-results/sidkey'] = array(
     'title' => 'Lookup Submission Key',
     'page callback' => 'drupal_get_form',
