@@ -105,7 +105,9 @@ function webform_sidkey_get_submissions($filters = array(), $headers = NULL, $pa
     // Remove the sidkey to avoid confusing the webform submission loading code
     unset($filters['sidkey']);
   }
-
+  // For some reason webforms no longer likes the nid values.
+  // So we remove it.
+  unset($filters['nid']);
   return webform_get_submissions($filters, $headers, $pager_count);
 }
 
